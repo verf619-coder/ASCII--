@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Редактор — ASCII Studio{% endblock %}
+
+{% block content %}
+<section class="editor-heading">
+    <div>
+        <p class="eyebrow">Твоя майстерня</p>
+        <h1>{% if artwork %}Редагувати роботу{% else %}ASCII-редактор{% endif %}</h1>
+    </div>
+</section>
+
+<div id="editor-form" class="editor-layout">
+    <aside class="settings-panel">
+        <div class="field">
+            <label for="artwork-title">Назва роботи</label>
+            <input id="artwork-title" name="title" type="text" maxlength="120"
+                   value="{{ artwork.title|default:'' }}" placeholder="Моя робота">
+        </div>
+        <div class="field">
+            <label for="text-input">Твій текст</label>
+            <textarea id="text-input" name="source_text" rows="5"
+                      placeholder="Напиши щось...">{{ artwork.source_text|default:'' }}</textarea>
+        </div>
+        <div class="field">
+            <label for="font-select">ASCII-шрифт</label>
+            <select id="font-select" name="font_name">
+                {% for value, label in font_choices %}
+                    <option value="{{ value }}"
+                        {% if artwork.font_name == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="color-fields">
+            <div class="field">
+                <label for="text-color">Колір тексту</label>
+                <input id="text-color" name="text_color" type="color"
+                       value="{{ artwork.text_color|default:'#f5f5f5' }}">
+            </div>
+            <div class="field">
+                <label for="background-color">Колір фону</label>
+                <input id="background-color" name="background_color" type="color"
+                       value="{{ artwork.background_color|default:'#111827' }}">
+            </div>
+        </div>
+        <div class="editor-actions">
+            <button id="generate-button" class="button" type="button">Generate</button>
+            <button id="clear-button" class="button button-secondary" type="button">Clear</button>
+            <button id="save-button" class="button button-secondary" type="button">Save</button>
+            <button id="download-button" class="button button-quiet" type="button">Download PNG</button>
+        </div>
+    </aside>
+
+    <section class="preview-panel" aria-labelledby="preview-title">
+        <div class="preview-heading">
+            <div>
+                <p class="eyebrow">Результат</p>
+                <h2 id="preview-title">Попередній перегляд</h2>
+            </div>
+            <span class="preview-status">Очікує на генерацію</span>
+        </div>
+        <pre id="ascii-preview" class="ascii-preview">{% if artwork %}{{ artwork.ascii_text }}{% else %}Твій ASCII Art з'явиться тут.{% endif %}</pre>
+        <p id="editor-message" class="editor-message" aria-live="polite"></p>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="{% static 'js/ascii.js' %}"></script>
+<script type="module" src="{% static 'js/editor.js' %}"></script>
+<script type="module" src="{% static 'js/api.js' %}"></script>
+<script type="module" src="{% static 'js/export.js' %}"></script>
+{% endblock %}

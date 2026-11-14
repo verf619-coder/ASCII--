@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Мої роботи — ASCII Studio{% endblock %}
+
+{% block content %}
+<section class="projects-heading">
+    <div>
+        <p class="eyebrow">Особиста колекція</p>
+        <h1>My Projects</h1>
+    </div>
+    <a class="button" href="{% url 'studio:editor' %}">New artwork <span aria-hidden="true">+</span></a>
+</section>
+
+{% if artworks %}
+    <div class="project-list">
+        {% for artwork in artworks %}
+            <article class="project-card">
+                <div>
+                    <h2>{{ artwork.title }}</h2>
+                    <p>Створено {{ artwork.created_at|date:"d.m.Y H:i" }}</p>
+                </div>
+                <div class="project-actions">
+                    <a class="button button-small" href="{% url 'studio:edit_artwork' artwork.id %}">Open editor</a>
+                    <button class="button button-quiet" type="button"
+                            id="delete-project-{{ artwork.id }}">Delete</button>
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="empty-state">
+        <p>Тут поки немає збережених робіт.</p>
+        <a href="{% url 'studio:editor' %}">Створи першу роботу</a>
+    </div>
+{% endif %}
+{% endblock %}

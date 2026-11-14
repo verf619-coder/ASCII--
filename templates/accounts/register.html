@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Реєстрація — ASCII Studio{% endblock %}
+
+{% block content %}
+<section class="form-card">
+    <p class="eyebrow">Створи власну колекцію</p>
+    <h1>Реєстрація</h1>
+    <form method="post" class="stacked-form">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+            <div class="form-errors" role="alert">{{ form.non_field_errors }}</div>
+        {% endif %}
+        {% for field in form %}
+            <div class="field">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}<div class="help-text">{{ field.help_text|safe }}</div>{% endif %}
+                {% for error in field.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+            </div>
+        {% endfor %}
+        <button class="button" type="submit">Create account</button>
+    </form>
+    <p class="form-footnote">Вже зареєстрований? <a href="{% url 'accounts:login' %}">Увійди</a>.</p>
+</section>
+{% endblock %}

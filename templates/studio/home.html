@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}ASCII Studio — перетвори текст на мистецтво{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <p class="eyebrow">Твоя творча майстерня</p>
+    <h1>ASCII Studio</h1>
+    <p class="hero-copy">
+        Перетворюй звичайний текст на виразне символьне мистецтво.
+        Створи роботу, налаштуй її вигляд і збережи у власній колекції.
+    </p>
+    <a class="button" href="{% url 'studio:editor' %}">Open Editor <span aria-hidden="true">→</span></a>
+</section>
+
+<section class="showcase" aria-labelledby="showcase-title">
+    <div class="section-heading">
+        <p class="eyebrow">Натхнення</p>
+        <h2 id="showcase-title">Трохи ASCII-магії</h2>
+    </div>
+    <div class="demo-grid">
+        <pre class="demo-card"> /\_/\
+( o.o )
+ &gt; ^ &lt;</pre>
+        <pre class="demo-card">  _____
+ / ____|
+| (___
+ \___ \
+ ____) |
+|_____/</pre>
+        <pre class="demo-card">* .  *  .  *
+ .  *  .  *
+   .  *  .</pre>
+    </div>
+</section>
+{% endblock %}

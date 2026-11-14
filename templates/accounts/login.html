@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Вхід — ASCII Studio{% endblock %}
+
+{% block content %}
+<section class="form-card">
+    <p class="eyebrow">Раді знову бачити</p>
+    <h1>Увійти</h1>
+    <form method="post" class="stacked-form">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+            <div class="form-errors" role="alert">{{ form.non_field_errors }}</div>
+        {% endif %}
+        {% for field in form %}
+            <div class="field">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% for error in field.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+            </div>
+        {% endfor %}
+        <button class="button" type="submit">Login</button>
+    </form>
+    <p class="form-footnote">Ще не маєш акаунта? <a href="{% url 'accounts:register' %}">Зареєструйся</a>.</p>
+</section>
+{% endblock %}
